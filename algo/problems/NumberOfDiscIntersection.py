@@ -1,6 +1,7 @@
 import unittest
 # import random
-
+# import time
+from wrapt_timeout_decorator import *
 
 RANGE_A = (0, 2147483647)
 RANGE_N = (0, 100000)
@@ -29,7 +30,7 @@ def slow_solution(input_array):
 def fast_solution(input_array):
     """
     Simplified solution - O(N*Log(N))
-    56% (100% correct, 12% performance)
+    100% (100% correct, 100% performance)
     """
     maximums = []
     minimums = []
@@ -60,13 +61,18 @@ class TestExercise(unittest.TestCase):
         self.assertEqual(solution([]), 0)
         self.assertEqual(solution([10]), 0)
         self.assertEqual(solution([1, 1]), 1)
+    #
+    # @timeout(5)
+    # def test_worst(self):
+    #     self.assertEqual(solution([0]*100000), 0)
 
+    @timeout(3)
     def test_extreme_large(self):
         arr = [10000000] * 100000
         self.assertEqual(solution(arr), -1)
 
 
-solution = fast_solution
+solution = slow_solution
 
 if __name__ == '__main__':
     unittest.main()
